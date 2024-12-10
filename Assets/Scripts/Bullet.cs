@@ -25,9 +25,15 @@ public class Bullet : MonoBehaviour
     {
         var damage = Random.Range(damageRange.x, damageRange.y);
 
+        var health = other.gameObject.GetComponent<Health>();
+        if (health != null) 
+        {
+            health.TakeDamage((int)damage);
+        }
+
         //TODO: Apply damage to other.gameObject
         //TODO: damage indication
-        print("Hit " + other.gameObject.name + " for " + damage + " damage");
+        //print("Hit " + other.gameObject.name + " for " + damage + " damage");
 
         Destroy(gameObject);
     }
