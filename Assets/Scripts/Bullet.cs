@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public GameObject enemy;
     public Vector3 direction;
     public float speed = 20;
     public Vector2 damageRange = new Vector2(10, 20);
@@ -30,10 +31,15 @@ public class Bullet : MonoBehaviour
         {
             health.TakeDamage((int)damage);
         }
-
-        //TODO: Apply damage to other.gameObject
-        //TODO: damage indication
-        //print("Hit " + other.gameObject.name + " for " + damage + " damage");
+        var enemyhealth = other.gameObject.GetComponent<EnemyHealth>();
+        if (enemyhealth != null)
+        {
+            enemyhealth.TakeDamage((int)damage);
+        }
+        if(enemyhealth == null)
+        {
+            Destroy(enemy);
+        }
 
         Destroy(gameObject);
     }

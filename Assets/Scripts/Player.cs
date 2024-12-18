@@ -34,7 +34,13 @@ public class Player : MonoBehaviour
     private float dashTime;
     private float dashCooldownTime;
 
+    public CollectCoins cc;
+    
 
+    [Header("Sound")]
+    public AudioClip collectCoin;
+    public AudioSource AudioSource;
+    
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -56,7 +62,7 @@ public class Player : MonoBehaviour
         {
             coyoteCounter -= Time.deltaTime;
         }
-
+       
         if (Input.GetButtonDown("Jump"))
         {
             jumpBuffer = jumpBufferTime;
@@ -119,4 +125,12 @@ public class Player : MonoBehaviour
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        AudioSource.PlayOneShot(collectCoin);
+        Destroy(other.gameObject);
+        cc.CoinAmount++;
+    }
+
 }

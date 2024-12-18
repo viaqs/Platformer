@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+
 
 public class Health : MonoBehaviour
 {
     public AudioClip damageSound;
-
     public int maxHealth = 6;
     public List<Image> hearts;
     public Sprite fullHeart;
@@ -17,13 +18,16 @@ public class Health : MonoBehaviour
     public UnityEvent onDeath;
 
     private int health;
-    private AudioSource audioSource;
+   
+    public AudioSource audioSource;
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        
         health = maxHealth;
+       
     }
+
 
     public void TakeDamage(int damage)
     {
@@ -32,7 +36,7 @@ public class Health : MonoBehaviour
         health -= damage;
         onDamage.Invoke();
 
-        if (health < 0)
+        if (health <= 0)
         {
             health = 0;
             onDeath.Invoke();
@@ -40,9 +44,13 @@ public class Health : MonoBehaviour
 
         UpdateHearts();
 
-        //TODO: death event or reload
+
     }
 
+    public void Die()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
     void UpdateHearts()
     {
         for (int i = 0; i < hearts.Count; i++)
