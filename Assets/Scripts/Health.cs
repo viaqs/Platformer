@@ -14,7 +14,7 @@ public class Health : MonoBehaviour
     public Sprite fullHeart;
     public Sprite halfHeart;
     public Sprite emptyHeart;
-    public UnityEvent onDamage;
+  
     public UnityEvent onDeath;
 
     private int health;
@@ -34,7 +34,7 @@ public class Health : MonoBehaviour
         audioSource.PlayOneShot(damageSound);
 
         health -= damage;
-        onDamage.Invoke();
+        
 
         if (health <= 0)
         {
@@ -47,7 +47,7 @@ public class Health : MonoBehaviour
 
     }
 
-    public void Die()
+    public void die()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
